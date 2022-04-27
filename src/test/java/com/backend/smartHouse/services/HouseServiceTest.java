@@ -6,9 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 
@@ -22,7 +24,7 @@ class HouseServiceTest {
     @Mock
     HouseRepository houseRepository;
 
-    House house = new House("house","address","heftzqeuiqrlige");
+    House house = new House("eerr","house","address","heftzqeuiqrlige");
 
     @Test
     void findAll() {
@@ -43,6 +45,7 @@ class HouseServiceTest {
 
     @Test
     void updateHouse() {
+        Mockito.lenient().when(houseRepository.findById(house.getId())).thenReturn(Optional.of(house));
         when(houseRepository.save(house)).thenReturn(house);
         assertEquals(house, houseService.updateHouse(house.getId(), house));
     }
